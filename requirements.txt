@@ -1,0 +1,3 @@
+pandas
+pywin32
+pyodbc
