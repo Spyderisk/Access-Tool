@@ -1,28 +1,49 @@
-# Kraken
+# Kraken, the Access monster
 
-## Overview of Kraken, the Access monster
+## Non-technical overview of Kraken
 
-Many people still have legacy Access applications that perform important functions
-even despite being obsolete technology. How can they escape?
+Microsoft Access is an obsolete visual application builder too, still found
+fairly widely because many organisations rely on legacy Access applications.
+Access was never designed for a modern multiuser world with software source
+code maintained in systems such as Git, and so it is becoming increasingly
+difficult to maintain these applications.
 
-We had exactly this problem, and we started by making Access repeatable. Perhaps
-not quite [reproducible builds](https://en.wikipedia.org/wiki/Reproducible_builds) because
-that is quite a high standard, but certainly heading that way.
+Ideally Access applications would be translated to some other open source
+system that does not rely on Access, or Micosoft Windows, or any Microsoft products at all.
+This is a problem that many other people have tried to fix, so we broke it down.
 
-To do that, we needed a way of turning Access into plain text files that can be
-committed to a source code management system like any other code, even though it
-was never designed for this and does not look like most kinds of programs. Access is
-primarily a visual applications builder.
+Kraken makes Access repeatable. 
 
-And that is why we wrote Kraken. kraken is a Python 3 program to dump the
-contents of a Microsoft Access database program to a plain text diffable
-format. An Access database contains not just tabular data, but also graphical
-forms, BASIC source code, SQL queries and other object types.
+Instead of an single-user untrackable GUI point-and-click development
+environment, Kraken turns Access applications into plain text files that can be
+diffed, and therefore stored in Git.
 
-The result is still tied to Microsoft Access and therefore to Microsoft
-Windows, but it makes the logic visible, it makes changes trackable, and it
-makes it much easier to plan our next step, which is to make the code work
-in a completely open source stack.
+Microsoft Access and Microsoft Windows is still needed to run the source code, but once
+it is visible in a normal way it is much easier to move the entire stack to open source.
+
+# Technical overview
+
+kraken is a Python 3 program to dump the contents of a Microsoft Access
+database program to plain text diffable. An Access database contains:
+
+* data in an SQL database, accessible by rows and columns using the SQL language
+* graphical forms created with a GUI form builder, containing buttons and other GUI objects
+* source code written in Visual Basic for Applications. The source code can be linked to any object on a form, for example to be executed when a button is clicked
+* SQL queries that are used to extract data from the database 
+* Other object types such as macros. We do not use other object types, so we have not tested dumping them from Access 
+
+Once kraken is installed and running, the workflow can look like this:
+
+1. Make a change to an Access application within Microsoft Access
+2. Outside Access in a directory under Git control, run ```kraken``` with some commandline paramers to dump the context of a database to plain text. Run the command ```git diff``` to verify that changes have been made that you expect.
+3. Run ```git commit -a``` and write a log message
+4. Run ```git push```
+
+Anyone else who can see the Git repository, for example on
+[GitHub](https://github.com/) or [SourceHut](https://sr.ht/), can then do a
+```git clone``` themselves followed by ```kraken push``` and then a new Access
+database is created for the user.
+
 
 ---
 
