@@ -67,8 +67,8 @@ If you do this successfully, you should be able to type ```python``` at the Wind
 
 At the Windows CMD prompt, use the ```pip``` command to install the kraken pre-requisites.
 
-```
-pip install pandas pywin32 pyodbc
+```shell
+python -m pip install -r requirements.txt
 ```
 
 ---
@@ -77,7 +77,9 @@ pip install pandas pywin32 pyodbc
 
 ### Basic usage
 
-`python src/kraken.py <action> ... <database> <export>`
+```shell
+python src/kraken.py [action] ... [database] [export]
+```
 
 database: Path to an Access (.accdb) file  
 export:   Path to where you want kraken to export/pull files from  
