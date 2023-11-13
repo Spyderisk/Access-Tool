@@ -58,7 +58,7 @@ def subp(p, action, extra=None, db=False):
     if db:
         parser.add_argument(
             "database",
-            help="Path to a microsoft access database"
+            help="Path to a microsoft access database",
         )
 
         parser.add_argument(
@@ -99,6 +99,10 @@ def parse_args():
     subp(s, "load-forms", db=True)
 
     args = parser.parse_args()
+
+    if not args.action:
+        parser.print_help()
+        exit(1)
 
     if args.action == "action-list":
         print(HELP_SUBCOMMANDS)
