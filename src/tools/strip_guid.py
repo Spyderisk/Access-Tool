@@ -19,6 +19,8 @@
 # <!-- SPDX-FileComment: Original by Jacob Lewis, November 2023 -->
 
 # ===  Tool for stripping GUIDs from Access forms  ===
+# The GUIDs do not have any known purpose, and since they change every time they
+# prevent the files from being diffed.
 
 
 import os

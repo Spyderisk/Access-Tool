@@ -18,7 +18,10 @@
 # <!-- SPDX-FileType: Source code -->
 # <!-- SPDX-FileComment: Original by Jacob Lewis, November 2023 -->
 
-# ===  Tool for converting the utf-16 form files Access spits out  ===
+# ===  Tool for converting UTF-16 to ASCII  ===
+# Access stores its Form objects (among others) in UTF-16. Most text processing
+# tools including diff and git need special configuration to handle this, and 
+# so we convert to plain ASCII. Access is happy to import forms in ASCII text.
 
 
 import codecs

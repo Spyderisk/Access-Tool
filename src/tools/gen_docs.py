@@ -19,8 +19,10 @@
 # <!-- SPDX-FileComment: Original by Jacob Lewis, November 2023 -->
 
 # ===  COM documentation generator  ===
-# Opens a Microsoft Access com object and runs through it, writing all modules, functions and properties to `doc.txt`
-# This is needed as existing com browsers can be a bit funky at times and no official documentation exists
+# Opens a Microsoft Access com object and runs through it, writing all modules, 
+# functions and properties to `doc.txt`. This is needed as existing com browsers
+# can be a bit funky at times and no official documentation exists for
+# Microsoft Access COM objects. 
 
 import win32com.client as win32
 import os
