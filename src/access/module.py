@@ -48,8 +48,7 @@ def dumpAllModules(a: Access, s: Settings):
 
     count = 1
     for moduleName in moduleNames:
-        print(f"\rDumping module {
-              count}/{len(moduleNames)} -> {moduleName}", end="")
+        print(f"\rDumping module {count}/{len(moduleNames)} -> {moduleName}", end="")
         dumpModule(moduleName, a, s)
         count += 1
     print()
