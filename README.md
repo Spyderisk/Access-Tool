@@ -1,30 +1,44 @@
-# Kraken, the Access monster
+# Kraken, wrestling Microsoft Access into open source
 
-## Non-technical overview of Kraken
+## TL;DR overview of Kraken
 
-Microsoft Access is an obsolete visual application builder too, still found
+Kraken makes [Microsoft Access](https://en.wikipedia.org/wiki/Microsoft_Access) repeatable.
+This means that someone you have never met can clone your Git repository, load it into 
+Access, and see the same program, database and user interface you developed.
+
+Kraken is an essential first step to replacing Access with an open source solution.
+
+## More detailed overview
+
+Microsoft Access is an obsolete visual application builder tool, still used
 fairly widely because many organisations rely on legacy Access applications.
-Access was never designed for a modern multiuser world with software source
-code maintained in systems such as Git, and so it is becoming increasingly
-difficult to maintain these applications.
+First released more than 30 years ago, Access was not designed for a modern
+multiuser world with software source code maintained in Git, and networked
+SQL databases, or even the internet. Legacy Access applications are increasingly
+difficult to maintain.
 
 Ideally Access applications would be translated to some other open source
-system that does not rely on Access, or Micosoft Windows, or any Microsoft products at all.
-This is a problem that many other people have tried to fix, so we broke it down.
+system that does not rely on Access, or Micosoft Windows, or any Microsoft
+products at all. This is a problem that many other people have tried to fix,
+so we broke it down.
 
-Kraken makes Access repeatable. 
+Instead of a single-user untrackable GUI point-and-click development
+environment, Kraken turns Access applications into [diffable](https://en.wiktionary.org/wiki/diffable) 
+plain text files that can be stored in Git, and put online using services such as
+[SourceHut](https://sr.ht), [Codeberg](https://codeberg.org) or [GitHub](https://github.com).
 
-Instead of an single-user untrackable GUI point-and-click development
-environment, Kraken turns Access applications into plain text files that can be
-diffed, and therefore stored in Git.
+After the files are retrieved from the Git service using a command such as ```git pull```, kraken
+can then be used to load them into Microsoft Access, forming a complete GUI application in the
+normal Access way. Microsoft Access and Microsoft Windows are still needed to run the source code,
+but we can now see what needs to be done to remove them.
 
-Microsoft Access and Microsoft Windows is still needed to run the source code, but once
-it is visible in a normal way it is much easier to move the entire stack to open source.
+In the meantime, Access development has become repeatable, using standard development tools.
 
 # Technical overview
 
 kraken is a Python 3 program to dump the contents of a Microsoft Access
-database program to plain text diffable. An Access database contains:
+database program to diffable plain text. An Access application (often confusingly
+called an "Access Database") contains:
 
 * data in an SQL database, accessible by rows and columns using the SQL language
 * graphical forms created with a GUI form builder, containing buttons and other GUI objects
@@ -32,7 +46,7 @@ database program to plain text diffable. An Access database contains:
 * SQL queries that are used to extract data from the database 
 * Other object types such as macros. We do not use other object types, so we have not tested dumping them from Access 
 
-Once kraken is installed and running, the workflow can look like this:
+Once kraken is installed and running, the Access application workflow can look like this:
 
 1. Make a change to an Access application within Microsoft Access
 2. Outside Access in a directory under Git control, run ```kraken``` with some commandline paramers to dump the context of a database to plain text. Run the command ```git diff``` to verify that changes have been made that you expect.
@@ -41,9 +55,21 @@ Once kraken is installed and running, the workflow can look like this:
 
 Anyone else who can see the Git repository, for example on
 [GitHub](https://github.com/) or [SourceHut](https://sr.ht/), can then do a
-```git clone``` themselves followed by ```kraken push``` and then a new Access
-database is created for the user.
+```git clone``` followed by ```kraken push``` and then a new Access
+application is created locally for the user.
 
+---
+
+# Installation
+
+You will need to [install Python 3 for Windows](https://docs.python.org/3/using/windows.html#installation-steps).
+If you do this successfully, you should be able to type ```python``` at the Windows CMD command prompt.
+
+At the Windows CMD prompt, use the ```pip``` command to install the kraken pre-requisites.
+
+```
+pip install pandas pywin32 pyodbc
+```
 
 ---
 
@@ -112,38 +138,33 @@ Here is a list of facts, rather than a coherent story. No doubt people familiar
 with the history of computing can improve the following, and we would love to
 hear from you.
 
-- Microsoft Access is 40 years old, and it is still present in quite a lot of
+- Microsoft Access is more than 30 years old, and it is still present in quite a lot of
 companies around the world. It is (even now) quite a good protoyping tool for
 form-based GUI applications, which describes most business apps.
-Microsoft have tried to kill the Access product off multiple times but they
-have giant customers who complain because Access is so built-in to their computing
-solutions. This means that while Access still works, Microsoft have not invested in
-improving it for years.
+Microsoft have tried to kill the Access product off multiple times, but there are large
+Microsoft customers who are so dependent on Access applications that they ask for
+to still be maintained. This means that while Access still works, Microsoft have not
+improved it for many years.
 
 - Access can work with remote SQL databases (using ODBC), but it is a
-Windows-only desktop app which is often
-very memory hungry, has lots of quirks and bugs, and is completely unsuitable
-for use in the 21st century. Even by non-programmers, who are often the people
-that start writing Access apps which then go on to become vital to an
+Windows-only desktop app which is often very memory hungry, has lots of quirks and bugs,
+and is completely unsuitable for use in the 21st century. Even by non-programmers,
+who are often the people that start writing Access apps which then go on to become vital to an
 organisation.
 
 - Microsoft also made Access very hard to migrate away from. There is a lot
 that is not documented. The BASIC programming language is VBA, not .NET basic,
 meaning there are no other implementations of it. There is an "Export" feature
-but it doesn't export everything that makes up an Access application.
+that produces plain text files, but it doesn't export everything that makes up
+an Access application.
 
-- An Access application consists of: Forms; Basic code attached to objects on a
-form such as a button; Basic code in modules available throughout the application;
-database tables stored in the undocumented Jet format; SQL queries that operate on
-these tables; macros and one or two other things.
-
-- Many many companies have spent money migrating away from Access applications. It is
-possible, including often just by ignoring the Access app except as a visual prototype.
+- Many many companies have spent money migrating away from Access applications. One 
+common approach is to ignore the Access app except as a visual prototype.
 There is no automated migration tool or technique that works for everyone, and nothing
-in open source at all.
+at all which is open source.
 
-- There are good things to say about Access. Access code written decades ago
-still runs just as well today, but most web front-end code in
-javascript/Node/etc needs to be rewritten every two years. From that point of
-view Access is cheaper and better over the long term. Which seems nonsense of
-course because it is unmaintainable code, but also partly true.
+- There are good things to say about Access applications, starting with longevity.
+Access code written decades ago still runs just as well today, while most web
+front-end code in javascript/Node/etc needs to be rewritten every 2-3 years. Whatever
+we choose to replace Access with in future, it needs to be designed to last a very long
+time.
