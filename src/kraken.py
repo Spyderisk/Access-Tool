@@ -20,6 +20,10 @@
 
 # ===  Kraken entrypoint  ===
 
+import os
+if os.name != 'nt':
+    print (f"Error: Parts of this program can only run on Windows. This OS is {os.name}.\n")
+    exit(1)
 
 from os.path import abspath
 
