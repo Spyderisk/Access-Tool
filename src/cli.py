@@ -77,24 +77,25 @@ def parse_args():
 
     subp(s, "action-list")
 
-    subp(s, "dump-all", db=True)
-    subp(s, "load-all", db=True)
+    subp(s, "pull", db=True)
+    subp(s, "push", db=True)
 
     subp(s, "dump-form", "form_name")
     subp(s, "dump-module", "module_name", db=True)
     subp(s, "dump-query", "query_name", db=True)
-    subp(s, "dump-table", "table_name", db=True)
-    subp(s, "dump-schema", db=True)
+    subp(s, "dump-database", db=True)
+    # subp(s, "dump-table", "table_name", db=True)
+    # subp(s, "dump-schema", db=True)
 
     subp(s, "dump-forms", db=True)
     subp(s, "dump-modules", db=True)
     subp(s, "dump-queries", db=True)
-    subp(s, "dump-tables", db=True)
+    # subp(s, "dump-tables", db=True)
 
     subp(s, "load-form", "form_name", db=True)
 
     subp(s, "load-csvs", "csvs_directory", db=True)
-    subp(s, "load-tables", db=True)
+    subp(s, "load_database", db=True)
     subp(s, "load-queries", db=True)
     subp(s, "load-forms", db=True)
 

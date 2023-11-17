@@ -40,22 +40,22 @@ class Access:
         self.__currentData = None
 
     def is_init(self) -> bool:
-        return self.__app == None
+        return self.__app is not None
 
     def app(self) -> win32.dynamic.CDispatch:
-        if self.is_init():
+        if not self.is_init():
             self.__open_access()
 
         return self.__app
 
     def currentProject(self):
-        if self.is_init():
+        if not self.is_init():
             self.__open_access()
 
         return self.__currentProject
 
     def currentData(self):
-        if self.is_init():
+        if not self.is_init():
             self.__open_access()
 
         print(type(self.__currentData))
@@ -80,3 +80,7 @@ class Access:
 
         self.__currentProject = self.__app.Application.CurrentProject
         self.__currentData = self.__app.Application.CurrentData
+
+    def quit(self):
+        if self.is_init():
+            self.__app.Application.Quit()

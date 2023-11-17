@@ -39,6 +39,7 @@ class Settings:
         self.moduleExport = os.path.join(exportPath, "modules")
         self.tableExport = os.path.join(exportPath, "tables")
         self.queryExport = os.path.join(exportPath, "querys")
+        self.databasedump = os.path.join(exportPath, "dump.sql")
 
         paths = [self.exportPath, self.formExport,
                  self.moduleExport, self.tableExport, self.queryExport]
