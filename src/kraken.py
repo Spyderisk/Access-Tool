@@ -20,11 +20,8 @@
 
 # ===  Kraken entrypoint  ===
 
-import os
-if os.name != 'nt':
-    print (f"Error: Parts of this program can only run on Windows. This OS is {os.name}.\n")
-    exit(1)
 
+import os
 from os.path import abspath
 
 from cli import parse_args
@@ -33,9 +30,12 @@ from settings import Settings
 from access.form import dumpForm, dumpAllForms, loadForm, loadForms
 from access.module import dumpModule, dumpAllModules, loadModules
 from access.query import dumpQuery, dumpAllQueries, loadQueries
-from access.table import dumpTable, dumpTables, dumpSchema, loadTables
+from access.database import dump_database, load_database
 from access.csv import loadCSVs
 
+if os.name != 'nt':
+    print (f"Error: Parts of this program can only run on Windows. This OS is {os.name}.\n")
+    exit(1)
 
 args = parse_args()
 
@@ -47,15 +47,14 @@ access = Access(args.database)
 settings = Settings(args.export)
 
 match args.action:
-    case "dump-all":
+    case "pull":
         dumpAllForms(access, settings)
         dumpAllModules(access, settings)
         dumpAllQueries(access, settings)
-        dumpTables(settings, args.database)
-        dumpSchema(settings)
+        dump_database(settings, args.database)
 
-    case "load-all":
-        loadTables(access, settings)
+    case "push":
+        load_database(settings, args.database)
         loadQueries(access, settings)
         loadForms(access, settings)
         loadModules(access, settings)
@@ -66,33 +65,26 @@ match args.action:
         dumpModule(args.module_name, access, settings)
     case "dump-query":
         dumpQuery(args.query_name, access, settings)
-    case "dump-table":
-        dumpTable(args.table_name, settings, args.database)
-    case "dump-schema":
-        dumpSchema(settings)
+    case "dump-database":
+        dump_database(settings, args.database)
 
     case "dump-forms":
         dumpAllForms(access, settings)
     case "load-forms":
         loadForms(access, settings)
-    case "dump-modules":
-        dumpAllModules(access, settings)
-    case "dump-queries":
-        dumpAllQueries(access, settings)
-    case "dump-tables":
-        dumpTables(settings, args.database)
-        loadCSVs(args.table_name, settings)
 
     case "load-form":
         loadForm(args.form_name, access, settings)
 
+    case "dump-modules":
+        dumpAllModules(access, settings)
     case "load-csvs":
         loadCSVs(args.csvs_directory, settings)
-    case "load-tables":
-        loadTables(access, settings)
     case "load-queries":
         loadQueries(access, settings)
     case "load-modules":
         loadModules(access, settings)
+    case "load_database":
+        load_database(settings, args.database)
 
-access.app().Application.Quit()
+access.quit()
