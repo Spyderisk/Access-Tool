@@ -2,9 +2,12 @@
 
 ## TL;DR overview of Kraken
 
-Kraken makes [Microsoft Access](https://en.wikipedia.org/wiki/Microsoft_Access) repeatable.
-This means that someone you have never met can clone your Git repository, load it into 
-Access, and see the same program, database and user interface you developed.
+Kraken makes [Microsoft Access](https://en.wikipedia.org/wiki/Microsoft_Access) repeatable,
+using plain ASCII text files. This means that someone you have never met can clone your
+Git repository containing text files, and run Kraken to create an application in their 
+copy of Microsoft access. They will see the same program, database and user interface
+you developed, even though Access tries quite hard to prevent this happening and certainly
+does not support dump/restore from text files.
 
 Kraken is an essential first step to replacing Access with an open source solution.
 
@@ -30,15 +33,16 @@ plain text files that can be stored in Git, and put online using services such a
 After the files are retrieved from the Git service using a command such as ```git pull```, kraken
 can then be used to load them into Microsoft Access, forming a complete GUI application in the
 normal Access way. Microsoft Access and Microsoft Windows are still needed to run the source code,
-but we can now see what needs to be done to remove them.
+but we can now see what needs to be done to remove this dependency.
 
-In the meantime, Access development has become repeatable, using standard development tools.
+But for now, we have solved the important step of making Access development repeatable,
+using standard development tools.
 
 # Technical overview
 
 kraken is a Python 3 program to dump the contents of a Microsoft Access
 database program to diffable plain text. An Access application (often confusingly
-called an "Access Database") contains:
+called an "Access Database") is made of these components:
 
 * data in an SQL database, accessible by rows and columns using the SQL language
 * graphical forms created with a GUI form builder, containing buttons and other GUI objects
@@ -49,7 +53,7 @@ called an "Access Database") contains:
 Once kraken is installed and running, the Access application workflow can look like this:
 
 1. Make a change to an Access application within Microsoft Access
-2. Outside Access in a directory under Git control, run ```kraken``` with some commandline paramers to dump the context of a database to plain text. Run the command ```git diff``` to verify that changes have been made that you expect.
+2. Outside Access, in a directory under Git control, run ```kraken``` with some commandline paramers to dump the context of a database to plain text. Run the command ```git diff``` to verify that changes have been made that you expect.
 3. Run ```git commit -a``` and write a log message
 4. Run ```git push```
 
