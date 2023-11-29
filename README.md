@@ -5,9 +5,9 @@
 Kraken makes [Microsoft Access](https://en.wikipedia.org/wiki/Microsoft_Access) repeatable,
 using plain ASCII text files. This means that someone you have never met can clone your
 Git repository containing text files, and run Kraken to create an application in their 
-copy of Microsoft access. They will see the same program, database and user interface
-you developed, even though Access tries quite hard to prevent this happening and certainly
-does not support dump/restore from text files.
+copy of Microsoft Access. They will see the same program, database and user interface
+you developed, even though Access does not support dump/restore from text files, and generally
+prevents anything that would help users move away from Access.
 
 Kraken is an essential first step to replacing Access with an open source solution.
 
