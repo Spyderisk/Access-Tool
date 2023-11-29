@@ -63,7 +63,8 @@ application is created locally for the user.
 # Installation
 
 You will need to [install Python 3 for Windows](https://docs.python.org/3/using/windows.html#installation-steps).
-If you do this successfully, you should be able to type ```python``` at the Windows CMD command prompt.
+If you do this successfully, you should be able to type ```python``` at the Windows CMD command prompt. We have only 
+tested on Python version 3.12.0, but would expect higher versions to work. We know that versions 3.11.x do not work.
 
 At the Windows CMD prompt, use the ```pip``` command to install the kraken pre-requisites.
 
