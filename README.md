@@ -42,9 +42,9 @@ called an "Access Database") contains:
 
 * data in an SQL database, accessible by rows and columns using the SQL language
 * graphical forms created with a GUI form builder, containing buttons and other GUI objects
-* source code written in Visual Basic for Applications. The source code can be linked to any object on a form, for example to be executed when a button is clicked
-* SQL queries that are used to extract data from the database 
-* Other object types such as macros. We do not use other object types, so we have not tested dumping them from Access 
+* source code written in [Visual Basic for Applications](https://en.wikipedia.org/wiki/Visual_Basic_for_Applications). The source code can be linked to any object within an Access form, for example to be executed when a button is clicked
+* SQL queries that are used to extract data from the database
+* Other object types such as macros, which we do not use. We have not tested dumping them from Access, however we look forward to hearing how other people get on who do use these objects
 
 Once kraken is installed and running, the Access application workflow can look like this:
 
@@ -54,7 +54,7 @@ Once kraken is installed and running, the Access application workflow can look l
 4. Run ```git push```
 
 Anyone else who can see the Git repository, for example on
-[GitHub](https://github.com/) or [SourceHut](https://sr.ht/), can then do a
+[GitHub](https://github.com/), [CodeBerg](https://codeberg.com/) or [SourceHut](https://sr.ht/), can then do a
 ```git clone``` followed by ```kraken push``` and then a new Access
 application is created locally for the user.
 
@@ -85,10 +85,10 @@ database: Path to an Access (.accdb) file
 export:   Path to where you want kraken to export/pull files from  
 action:   Pick from this list:  
 
-Dump/Load all data types
+Pull from Access/Push to Access, all data types (ie the full Access application)
 
-- dump-all
-- load-all
+- pull
+- push
 
 Dump induvidual items
 
@@ -119,17 +119,22 @@ Kraken has multiple additional tools located inside `src/tools/`
 
 #### conv_utf16-ascii.py
 
-Used to convert the UTF16 files which Access uses for forms and turns them into ascii
+Used to convert the UTF16 files which Access uses for forms and turns them into 8-bit ASCII. 
+
 Usage: `python conv_utf16-ascii.py <Path to file/directory of files>`
 
 #### strip_guids.py
 
-Strips the GUIDs from an exported form.
+Strips the GUIDs from an exported form. We don't know why Access generates different
+GUIDs every time, but they prevent diffing forms and so we need to remove them. Access
+does not seem to mind.
+
 Usage: `python strip_guids.py <Path to file/directory of files>`
 
 #### gen_docs.py
 
-Generates documentation for Access's COM object. It will write this to doc.txt
+Generates documentation the functions implemented by Access's COM object. It will write this to `doc.txt`.
+
 Usage: `python gen_docs.py`
 
 ---
