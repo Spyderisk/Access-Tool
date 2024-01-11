@@ -1,15 +1,36 @@
 # Kraken, wrestling Microsoft Access into open source
 
-## TL;DR overview of Kraken
+This Python script extracts all objects from a [Microsoft Access](https://en.wikipedia.org/wiki/Microsoft_Access)
+program in a plain text format. It also allows these same plain text formats to be re-loaded into Microsoft Access
+to give the original program. This is impressive, because Microsoft Access is obsolete and generally prevents
+anything that would help users migrate away.
 
-Kraken makes [Microsoft Access](https://en.wikipedia.org/wiki/Microsoft_Access) repeatable,
-using plain ASCII text files. This means that someone you have never met can clone your
-Git repository containing text files, and run Kraken to create an application in their 
-copy of Microsoft Access. They will see the same program, database and user interface
-you developed, even though Access does not support dump/restore from text files, and generally
-prevents anything that would help users move away from Access.
+Kraken was originally written because the [Spyderisk development team](https://github.com/Spyderisk) had an editor for 
+[complicated mathematical relationships](https://github.com/Spyderisk/domain-network/tree/6a/csv) that we wanted to open source.
+We believe this should work for many Access applications, and we invite other people to try it out and 
+[raise an issue to tell us](https://github.com/Spyderisk/Access-Tool/issues/new) if you have a problem or just 
+want to say that it is working great for you.
 
 Kraken is an essential first step to replacing Access with an open source solution.
+
+## TL;DR overview of Kraken
+
+Kraken makes Microsoft Access code repeatable, using plain ASCII (really UTF-8) text files.
+This means that someone can find your code online and then:
+* clone your Git repository containing text files onto their Windows computer
+* run Kraken, which imports these text files into their copy of Microsoft Access to re-create your application.
+They will see the same program, database and user interface you developed.
+
+## Other solutions
+
+Other people have worked on this problem, with different requirements:
+* Santiago Bragagnolo [wrote a paper with source code](https://link.springer.com/chapter/10.1007/978-3-030-64694-3_10)
+demonstrating one of the main techniques used in this tool. The code is written in Smalltalk, and is 
+[available on GitHub](https://github.com/impetuosa/jindao). Santiago is solving a different problem but the techniques overlap.
+* Adam Waller maintains [a code module for Microsoft Access](https://github.com/joyfullservice/msaccess-vcs-addin) that will export 
+and import from multiple source control systems. This solution is for people who want to stay within the Access/Windows world,
+but merely want to add revision control and collaboration to Access. In contrast, Kraken works without running any Access code, because our 
+goal is to become Access-free.
 
 ## More detailed overview
 
@@ -27,7 +48,7 @@ so we broke it down.
 
 Instead of a single-user untrackable GUI point-and-click development
 environment, Kraken turns Access applications into [diffable](https://en.wiktionary.org/wiki/diffable) 
-plain text files that can be stored in Git, and put online using services such as
+plain text files that can be stored in Git, Fossil or Mercurial, and then put online using services such as
 [SourceHut](https://sr.ht), [Codeberg](https://codeberg.org) or [GitHub](https://github.com).
 
 After the files are retrieved from the Git service using a command such as ```git pull```, kraken
