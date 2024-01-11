@@ -73,7 +73,7 @@ class Access:
                 self.__app = win32.gencache.EnsureDispatch(
                     'Access.Application')
             except PermissionError:
-                print(f"Unable to clear cache, please delete '{temp}'")
+                print(f"Unable to clear cache, please manually delete '{temp}'")
                 exit(-1)
 
         self.__app.Application.OpenCurrentDatabase(self.path)
