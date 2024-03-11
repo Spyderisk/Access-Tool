@@ -1,13 +1,18 @@
 # Kraken, a tool to convert Microsoft Access databases to and from text files
 
-Kraken is a Python script to to convert your entire Access application to plain text files, and back again.
+Kraken is a Windows Python script to to convert your entire obsolete/legacy
+[Microsoft Access](https://en.wikipedia.org/wiki/Microsoft_Access) application
+to plain text files, and back again. Graphical forms, code, queries etc are all
+exported and appear as ordinary text files, and when re-imported into Access
+the application is unchanged.
 
-Kraken runs [Microsoft Access](https://en.wikipedia.org/wiki/Microsoft_Access) and queries it to extract
-all program objects (code, forms, queries etc) to a plain text format. Kraken can then re-load these same
-plain text files into Microsoft Access, and the result is identical to the original program.
+This is useful because:
 
-You can do many thing with the plain text files, especially store them in a version control system such as [Git](https://git-scm.com). 
-You can also back them up easily, and use them as a starting point for migrating away from Access and Windows altogether.
+* the plain text files can be managed in a version control system, such as [Git](https://git-scm.com) or [Fossil](https://fossil-scm.org)
+* text files are easy to back up and verify in detail. An Access program/database is one big binary blob
+* Access scatters programmatic objects in many places. If you want (for example) just the SQL queries or just the visual forms, Kraken puts in one place. Who knows what you might discover?
+* Access is poorly suited to documenting how a program works. With Kraken, you can tie documentation (eg Markdown files) stored outside Access to the programmable objects inside Access
+* text files are a good place to start if you want to migrate away from Windows and Access completely. Kraken is an excellent first step.
 
 Kraken was originally written because the [Spyderisk development team](https://github.com/Spyderisk) had an editor for 
 [complicated mathematical relationships](https://github.com/Spyderisk/domain-network/tree/6a/csv) that we wanted to make
@@ -16,15 +21,18 @@ If you have Access Databases/programs you wish to store in Git, then we invite y
 [Raise an issue to tell us](https://github.com/Spyderisk/Access-Tool/issues/new) if you have a problem, or just 
 want to say it is working great for you.
 
-One day, we would like to take the text file description of an Access application and processes it so it can 
-be run using open source tools on Linux. But we are not there yet.
+One day, we would like to take the text file description of an Access
+application and processes it so it can be run using open source tools on Linux.
+We are not there yet, but this is an excellent first step.
 
 ## TL;DR overview of Kraken
 
 Kraken makes Microsoft Access code repeatable, using plain ASCII (really UTF-8) text files.
 This means that someone can find your Access code online (say on GitHub, SourceHut or CodeBerg) and then:
+
 * clone the Git repository containing your code in text files, onto their Windows computer
 * run Kraken on their Windows computer, which imports these text files into their copy of Microsoft Access to re-create your application.
+
 They will see the same program, database and user interface you developed, but they only had access to the code on GitHub. They have *repeated*
 your program independently.
 
@@ -68,8 +76,13 @@ can then be used to load them into Microsoft Access, resulting in a complete GUI
 normal Access way. Microsoft Access and Microsoft Windows are still needed to run the source code,
 but we can now see what needs to be done to remove this dependency.
 
-But for now, we have solved the important step of making Access development repeatable,
-using standard non-Microsoft software development tools.
+But for now, we have solved the important step of making Access development
+repeatable, using standard non-Microsoft software development tools.
+"Repeatable" means that someone can get the same Access application after
+executing "git clone" on a text file repository. Kraken does not however make
+Access [reproducible](https://reproducible-builds.org/), because it creates
+binary differences in databases for reasons that are invisible to the users.
+Reproducibility is about quality software engineering, and Microsoft Access is not.
 
 # Technical overview
 
