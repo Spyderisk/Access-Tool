@@ -10,16 +10,18 @@ This is useful because:
 
 * the plain text files can be managed in a version control system, such as [Git](https://git-scm.com) or [Fossil](https://fossil-scm.org)
 * text files are easy to back up and verify in detail. An Access program/database is one big binary blob
-* Access scatters programmatic objects in many places. If you want (for example) just the SQL queries or just the visual forms, Kraken puts in one place. Who knows what you might discover?
+* Access scatters programmatic objects in many places. If you want (for example) just the SQL queries or just the visual forms, Kraken puts them in one place. Who knows what you might discover?
 * Access is poorly suited to documenting how a program works. With Kraken, you can tie documentation (eg Markdown files) stored outside Access to the programmable objects inside Access
 * text files are a good place to start if you want to migrate code away from Windows. Kraken is an excellent first step to open sourcing legacy Access code.
 
 Kraken was originally written because the [Spyderisk development team](https://github.com/Spyderisk) team had an editor for 
 [complicated mathematical relationships](https://github.com/Spyderisk/domain-network/tree/6a/csv) we wanted to make
-open source. The first step to making something open source is to see all the source code, and that is what Kraken makes possible. 
-If you have Access Databases/programs you wish to store in Git, then we invite you to try Kraken. 
-[Raise an issue to tell us](https://github.com/Spyderisk/Access-Tool/issues/new) if you have a problem, or just 
-want to say it is working great for you.
+open source. The first step to making something open source is to make all the source code visible, which Access tries hard to prevent.
+
+We invite you to try Kraken if you have Access Databases/programs you wish to
+open up, whether for backup or storing on GitHub or any other modern purpose.
+[Raise an issue to tell us](https://github.com/Spyderisk/Access-Tool/issues/new) if you have a problem,
+or just want to say it is working great for you.
 
 One day, we would like to take the text file description of an Access
 application and processes it so it can be run using open source tools on Linux.
