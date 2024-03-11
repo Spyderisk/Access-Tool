@@ -1,6 +1,6 @@
-# Kraken, a tool to convert Microsoft Access databases to and from text files
+# Kraken, a tool to convert obsolete Access databases to and from text files
 
-Kraken is a Windows Python script to to convert your entire obsolete/legacy
+Kraken is a [Python](https://python.org) script to to convert your entire obsolete/legacy
 [Microsoft Access](https://en.wikipedia.org/wiki/Microsoft_Access) application
 to plain text files, and back again. Graphical forms, code, queries etc are all
 exported and appear as ordinary text files, and when re-imported into Access
@@ -12,10 +12,10 @@ This is useful because:
 * text files are easy to back up and verify in detail. An Access program/database is one big binary blob
 * Access scatters programmatic objects in many places. If you want (for example) just the SQL queries or just the visual forms, Kraken puts in one place. Who knows what you might discover?
 * Access is poorly suited to documenting how a program works. With Kraken, you can tie documentation (eg Markdown files) stored outside Access to the programmable objects inside Access
-* text files are a good place to start if you want to migrate away from Windows and Access completely. Kraken is an excellent first step.
+* text files are a good place to start if you want to migrate code away from Windows. Kraken is an excellent first step to open sourcing legacy Access code.
 
-Kraken was originally written because the [Spyderisk development team](https://github.com/Spyderisk) had an editor for 
-[complicated mathematical relationships](https://github.com/Spyderisk/domain-network/tree/6a/csv) that we wanted to make
+Kraken was originally written because the [Spyderisk development team](https://github.com/Spyderisk) team had an editor for 
+[complicated mathematical relationships](https://github.com/Spyderisk/domain-network/tree/6a/csv) we wanted to make
 open source. The first step to making something open source is to see all the source code, and that is what Kraken makes possible. 
 If you have Access Databases/programs you wish to store in Git, then we invite you to try Kraken. 
 [Raise an issue to tell us](https://github.com/Spyderisk/Access-Tool/issues/new) if you have a problem, or just 
@@ -24,6 +24,8 @@ want to say it is working great for you.
 One day, we would like to take the text file description of an Access
 application and processes it so it can be run using open source tools on Linux.
 We are not there yet, but this is an excellent first step.
+
+In our view, Access was a visual prototyping tool. Kraken is helping us move these mathematical relationships to more sustainable computer science.
 
 ## TL;DR overview of Kraken
 
