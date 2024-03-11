@@ -27,7 +27,7 @@ One day, we would like to take the text file description of an Access
 application and processes it so it can be run using open source tools on Linux.
 We are not there yet, but this is an excellent first step.
 
-In our view, Access was a visual prototyping tool. Kraken is helping us move these mathematical relationships to more sustainable computer science.
+In our view, Access is a visual prototyping tool unsuitable for modern production use or computer science purposes. Kraken is helping us move these important mathematical relationships away to more sustainable tools.
 
 ## TL;DR overview of Kraken
 
