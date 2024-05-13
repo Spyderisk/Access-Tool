@@ -6,9 +6,11 @@ to plain text files, and back again.
 Access stores its applications in an undocumented binary format. It can be difficult enough using Access
 in the 21st century, so it helps to have modern software development practices.
 
-Kraken was originally written because the [Spyderisk development team](https://github.com/Spyderisk) team had an editor for 
-[complicated mathematical relationships](https://github.com/Spyderisk/domain-network/tree/6a/csv) we wanted to make
-open source. The first step to making something open source is to make all the source code visible, which Access tries hard to prevent.
+Kraken was originally written because the [Spyderisk development team](https://github.com/Spyderisk)
+team had an editor for 
+[complicated mathematical relationships](https://github.com/Spyderisk/domain-network/tree/6a/csv)
+we wanted to make open source. The first step to making something open source is to make all the source code
+visible, which Access tries hard to prevent.
 
 Kraken is useful because:
 
@@ -31,6 +33,7 @@ One day, we would like to take the text file description of an Access
 application and processes it so it can be run using open source tools on Linux.
 We are not there yet, but this is an excellent first step.
 
+Kraken is [licensed under generous terms](LICENSE.md).
 
 ## TL;DR overview of Kraken
 
