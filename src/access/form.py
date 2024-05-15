@@ -20,38 +20,53 @@
 
 # ===  Form dumping / loading  ===
 
-
-import traceback
 import os
+import logging_util
 from settings import Settings
 from access.access import Access
 
+log = logging_util.getLogger()
+
 # ===  DUMPING  ===
 
-
-def dumpForm(formName, a: Access, s: Settings):
+def dumpForm(formName: str, a: Access, s: Settings) -> bool:
+    """Dump a single form of name `formName`, returns true on success"""
     try:
         a.app().DoCmd.OpenForm(formName)
-        a.app().Application.SaveAsText(
-            2, formName, os.path.join(s.formExport, formName + ".frm"))
+        a.app().Application.SaveAsText(2, formName, os.path.join(s.formExport, formName + ".frm"))
         a.app().DoCmd.Close(2, formName)
+        return True
     except:
-        print("Form error", formName)
-        traceback.print_exc()
-
+        log.error(f"Failed to dump form {formName}", has_exception=True)
+        return False
 
 def dumpAllForms(a: Access, s: Settings):
+    """Dump all forms in a project"""
     allForms = a.currentProject().AllForms
     formNames = []
     for i in range(allForms.Count):
         formNames.append(allForms.Item(i).Name)
 
-    count = 1
+    length = len(formNames)
+    log.info(f"Dumping {length} forms")
+
+    fail = []
+    c = 1
+
     for formName in formNames:
-        print(f"\rDumping form {count}/{len(formNames)} -> {formName}", end="")
-        dumpForm(formName, a, s)
-        count += 1
-    print()
+        print(f"Dumping form {c}/{len(formName)}    \r", end="")
+        c += 1
+
+        if not dumpForm(formName, a, s):
+            # If form failed to dump
+            log.flush() # Make sure the error was written to file
+            fail.append(formName)
+    
+    log.info(f"Succesfully dumped {length - len(fail)}/{length} forms")
+
+    if len(fail) > 0 :
+        log.error(f"Failed forms: {fail}")
+
 
 # ===  LOADING  ===
 

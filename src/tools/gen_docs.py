@@ -82,8 +82,11 @@ def write_node(node: tuple[list, list, list], i=1):
 project = open_access()
 file = open("doc.txt", "w")
 
-tree = get_members(project)
 
 file.write("MS ACCESS COM DOCS\n\n")
 
+tree = get_members(project)
 write_node(tree, 0)
+
+tree2 = get_members(project.Application.CurrentProject)
+write_node(tree2, 0)

@@ -22,6 +22,9 @@
 
 
 import argparse
+import logging_util
+
+log = logging_util.getLogger()
 
 HELP_SUBCOMMANDS =\
 """
@@ -49,12 +52,12 @@ load-forms
 """
 
 
-def subp(p, action, extra=None, db=False):
+def subp(p, action: str, extra=None, db=False):
     parser = p.add_parser(action)
 
     if extra != None:
         parser.add_argument(extra)
-    
+
     if db:
         parser.add_argument(
             "database",
@@ -73,14 +76,24 @@ def parse_args():
         description='Microsoft Access to SQL converter',
     )
 
-    s = parser.add_subparsers(help="Use action-list for actions", metavar="action", dest="action")
+    s = parser.add_subparsers(
+        help="Use action-list for actions", metavar="action", dest="action")
+    
+    parser.add_argument(
+        "--verbose",
+        dest="verbose",
+        action="store_const",
+        const=True,
+        default=False,
+        help="Print additional info during runtime"
+    )
 
     subp(s, "action-list")
 
     subp(s, "pull", db=True)
     subp(s, "push", db=True)
 
-    subp(s, "dump-form", "form_name")
+    subp(s, "dump-form", "form_name", db=True)
     subp(s, "dump-module", "module_name", db=True)
     subp(s, "dump-query", "query_name", db=True)
     subp(s, "dump-database", db=True)
@@ -108,5 +121,20 @@ def parse_args():
     if args.action == "action-list":
         print(HELP_SUBCOMMANDS)
         exit(0)
+    
+    log_cli(args)
 
     return args
+
+
+def log_cli(args):
+    log.init_logger(args.verbose)
+
+    log.info(f"Started program")
+    log.debug(f"Action: {args.action}")
+
+    if hasattr(args, "database"):
+        log.debug(f"Database: {args.database}")
+        log.debug(f"Export directory: {args.export}")
+    if hasattr(args, "extra"):
+        log.debug(f"Target: {args.extra}")

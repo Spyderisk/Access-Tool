@@ -117,7 +117,8 @@ def gen_table_data(c: Cursor, table_name: str):
         for row in rows:
             row = fix_data(list(row))
 
-            t += f"INSERT INTO [{table_name}] VALUES ({", ".join(str(x) for x in row)});\n"
+            t += f"INSERT INTO [{table_name}] VALUES ({", ".join(str(x)
+                                                                 for x in row)});\n"
     except ProgrammingError as e:
         print(f"Warning: {str(e)}")
     except Error as e:

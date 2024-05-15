@@ -22,6 +22,7 @@
 
 
 import os
+import logging_util
 from os.path import abspath
 
 from cli import parse_args
@@ -32,6 +33,8 @@ from access.module import dumpModule, dumpAllModules, loadModules
 from access.query import dumpQuery, dumpAllQueries, loadQueries
 from access.database import dump_database, load_database
 from access.csv import loadCSVs
+
+log = logging_util.getLogger()
 
 if os.name != 'nt':
     print (f"Error: Parts of this program can only run on Windows. This OS is {os.name}.\n")

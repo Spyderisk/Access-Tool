@@ -24,12 +24,14 @@
 from os.path import join
 from os import environ, remove
 import win32com.client as win32
+import logging_util
 
+log = logging_util.getLogger()
 
 class Access:
     __app: win32.dynamic.CDispatch | None
-    __currentProject: None  # = project.Application.CurrentProject
-    __currentData: None  # = project.Application.CurrentData
+    # __currentProject: None  # = project.Application.CurrentProject
+    # __currentData: None  # = project.Application.CurrentData
     path: str
 
     def __init__(self, path: str) -> None:
@@ -66,14 +68,14 @@ class Access:
         try:
             self.__app = win32.gencache.EnsureDispatch('Access.Application')
         except AttributeError:  # If the cache is broken, it will error
-            print("Cache import failure")
+            log.warning("COM Cache import failure, attempting to resolve")
             temp = join(environ["TEMP"], "gen_py")
             try:
                 remove(temp)  # Fails, due to lack of permissions
                 self.__app = win32.gencache.EnsureDispatch(
                     'Access.Application')
             except PermissionError:
-                print(f"Unable to clear cache, please delete '{temp}'")
+                log.critical(f"Unable to clear cache, please delete '{temp}'")
                 exit(-1)
 
         self.__app.Application.OpenCurrentDatabase(self.path)
@@ -83,4 +85,13 @@ class Access:
 
     def quit(self):
         if self.is_init():
-            self.__app.Application.Quit()
+            try:
+                self.__app.Application.Quit()
+            except:
+                log.error("Access is already closed, has it crashed?")
+        self.__app = None
+
+    def __del__(self):
+        # In case of a crash, access does not get closed
+        if self.is_init():
+            self.quit()
