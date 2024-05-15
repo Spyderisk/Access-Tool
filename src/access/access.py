@@ -19,7 +19,7 @@
 # <!-- SPDX-FileComment: Original by Jacob Lewis, November 2023 -->
 
 # ===  Access COM wrapper  ===
-# Implemented such that MS Access only gets opened once actually needed
+# Implemented such that MS Access only gets opened when it is actually needed
 
 from os.path import join
 from os import environ, remove
