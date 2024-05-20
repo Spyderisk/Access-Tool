@@ -3,8 +3,10 @@
 Kraken is a Python script to to convert your entire obsolete/legacy 
 [Microsoft Access](https://en.wikipedia.org/wiki/Microsoft_Access) application
 to [diffable](https://en.wiktionary.org/wiki/diffable) plain text files, and back again.
-Access stores its applications in an undocumented binary format. This is new, unique and
-essential for organisations stuck with important applications in Access code.
+Access stores its applications in an undocumented binary format, so this is new, unique and
+essential for organisations migrating important applications away from Access.
+
+# Table of contents
 
 * [Introduction ](#introduction-)
 * [Important project information](#important-project-information)
@@ -22,13 +24,7 @@ essential for organisations stuck with important applications in Access code.
 * [Relevant Computing History Background](#relevant-computing-history-background)
 
 
-# Introduction 
-
-Kraken is a Python script to to convert your entire obsolete/legacy 
-[Microsoft Access](https://en.wikipedia.org/wiki/Microsoft_Access) application
-to plain text files, and back again.
-Access stores its applications in an undocumented binary format. It can be difficult enough using Access
-in the 21st century, so it helps to have modern software development practices.
+# Introduction - why Kraken?
 
 Kraken is useful because:
 
