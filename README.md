@@ -40,7 +40,6 @@ want to say it is working great for you.
 
 One day, we plan to write a parser for Access
 application and processes it so it can be run using open source tools on Linux.
-We are not there yet, but this is an excellent first step.
 
 Kraken is [licensed under generous terms](./LICENSE.md).
 
@@ -53,10 +52,10 @@ for the [Spyderisk project](https://github.com/Spyderisk). When Spyderisk was op
 in 2023 Access had to be replaced, and Kraken is how we are doing it.
 
 Kraken is available under [Open Source terms](./LICENSE.md). Everyone is welcome, noting
-our [basic rules of decent behaviour](./CODE-OF-CONDUCT.md) around Spyderisk,
+our [basic rules of decent behaviour](./CODE-OF-CONDUCT.md),
 which includes contact details if you want to report a behaviour problem.
 
-We try to make it easy to [contribute to Spyderisk](./CONTRIBUTING.md) whatever your skills.
+We try to make it easy to [contribute to Kraken](./CONTRIBUTING.md) whatever your skills.
 
 You can contact us by:
 * [raising a GitHub Issue](https://github.com/Spyderisk/Access-tool/issues/new)
