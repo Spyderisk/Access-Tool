@@ -1,4 +1,28 @@
-# Kraken, a tool to convert obsolete Access databases to and from text files
+# Kraken, wrestling Microsoft Access into the 21st century
+
+Kraken is a Python script to to convert your entire obsolete/legacy 
+[Microsoft Access](https://en.wikipedia.org/wiki/Microsoft_Access) application
+to [diffable](https://en.wiktionary.org/wiki/diffable) plain text files, and back again.
+Access stores its applications in an undocumented binary format. This is new, unique and
+essential for organisations stuck with important applications in Access code.
+
+* [Introduction ](#introduction-)
+* [Important project information](#important-project-information)
+* [Overview of Kraken](#overview-of-kraken)
+* [Alternative solutions](#alternative-solutions)
+* [More detailed overview](#more-detailed-overview)
+* [Technical overview](#technical-overview)
+* [Installation](#installation)
+* [Using Kraken](#using-kraken)
+    * [Basic usage](#basic-usage)
+    * [Additional Tools](#additional-tools)
+        * [conv_utf16-ascii.py](#conv_utf16-ascii.py)
+        * [strip_guids.py](#strip_guids.py)
+        * [gen_docs.py](#gen_docs.py)
+* [Relevant Computing History Background](#relevant-computing-history-background)
+
+
+# Introduction 
 
 Kraken is a Python script to to convert your entire obsolete/legacy 
 [Microsoft Access](https://en.wikipedia.org/wiki/Microsoft_Access) application
@@ -6,36 +30,43 @@ to plain text files, and back again.
 Access stores its applications in an undocumented binary format. It can be difficult enough using Access
 in the 21st century, so it helps to have modern software development practices.
 
-Kraken was originally written because the [Spyderisk development team](https://github.com/Spyderisk)
-team had an editor for 
-[complicated mathematical relationships](https://github.com/Spyderisk/domain-network/tree/6a/csv)
-we wanted to make open source. The first step to making something open source is to make all the source code
-visible, which Access tries hard to prevent.
-
 Kraken is useful because:
 
-* the plain text files can be managed in a version control system, such as [Git](https://git-scm.com) or [Fossil](https://fossil-scm.org), as used by services like [Codeberg](https://codeberg.org) and [GitHub](https://github.com).
-* text files are easy to back up and verify in detail. An Access program/database is one big binary blob
+* plain text files can be managed in a version control system, such as [Git](https://git-scm.com) or [Fossil](https://fossil-scm.org), as used by services like [Codeberg](https://codeberg.org) and [GitHub](https://github.com).
+* text files are easy to back up and verify in detail. An Access program/database is one big binary blob, you can back it up but have no way to verify the integrity of that backup
 * Access scatters programmatic objects in many places. If you want (for example) just the SQL queries or just the visual forms, Kraken puts them in one place. Who knows what you might discover?
 * Access is poorly suited to documenting how a program works. With Kraken, you can tie documentation (eg Markdown files) stored outside Access to the programmable objects inside Access
 * text files are a good place to start if you want to migrate code away from Windows. Kraken is an excellent first step to open sourcing legacy Access code.
 
-
-Kraken was originally written because the [Spyderisk development team](https://github.com/Spyderisk) had an editor for 
-[complicated mathematical relationships](https://github.com/Spyderisk/domain-network/tree/6a/csv) that we wanted to make
-open source. The first step to making something open source is to see all the source code, 
-and that is what Kraken makes possible. 
 If you have Access Databases/programs you wish to store in Git, then we invite you to try Kraken. 
 [Raise an issue to tell us](https://github.com/Spyderisk/Access-Tool/issues/new) if you have a problem, or just 
 want to say it is working great for you.
 
-One day, we would like to take the text file description of an Access
+One day, we plan to write a parser for Access
 application and processes it so it can be run using open source tools on Linux.
 We are not there yet, but this is an excellent first step.
 
-Kraken is [licensed under generous terms](LICENSE.md).
+Kraken is [licensed under generous terms](./LICENSE.md).
 
-## TL;DR overview of Kraken
+# Important project information
+
+Kraken was created by the [Spyderisk Contributors](./CONTRIBUTORS.md) to handle a legacy
+Access application to handle
+[complicated mathematical relationships](https://github.com/Spyderisk/domain-network/tree/6a/csv)
+for the [Spyderisk project](https://github.com/Spyderisk). When Spyderisk was open sourced 
+in 2023 Access had to be replaced, and Kraken is how we are doing it.
+
+Kraken is available under [Open Source terms](./LICENSE.md). Everyone is welcome, noting
+our [basic rules of decent behaviour](./CODE-OF-CONDUCT.md) around Spyderisk,
+which includes contact details if you want to report a behaviour problem.
+
+We try to make it easy to [contribute to Spyderisk](./CONTRIBUTING.md) whatever your skills.
+
+You can contact us by:
+* [raising a GitHub Issue](https://github.com/Spyderisk/Access-tool/issues/new)
+* emailing [team@spyderisk.org](mailto://team@spyderisk.org)
+
+# Overview of Kraken
 
 Kraken makes Microsoft Access code repeatable, using plain ASCII (really UTF-8) text files.
 This means that someone can find your Access code online (say on GitHub) and then:
@@ -45,8 +76,7 @@ This means that someone can find your Access code online (say on GitHub) and the
 
 They will see the same program, database and user interface you developed, but
 they only had access to the code on GitHub. They have *repeated* your program
-independently. They have not *reproduced* your program, reproducibility is a 
-level of computer science certainty that Access cannot reach.
+independently, which has not previously been possible.
 
 Kraken will not:
 
@@ -55,7 +85,7 @@ Kraken will not:
 * work without Python
 * run on Linux/Unix
 
-## Other solutions
+# Alternative solutions
 
 Other people have worked on this problem, with different requirements:
 * Santiago Bragagnolo [wrote a paper with source code](https://link.springer.com/chapter/10.1007/978-3-030-64694-3_10)
@@ -66,7 +96,7 @@ and import from multiple source control systems including Git. Adam's solution i
 but merely want to add revision control and collaboration to Access. In contrast, Kraken works in Python outside Access, and Access knows
 nothing about it.
 
-## More detailed overview
+# More detailed overview
 
 Microsoft Access is an obsolete visual application builder tool, still used
 fairly widely because many organisations rely on legacy Access applications.
@@ -81,12 +111,12 @@ so we broke it down into smaller pieces.
 
 Instead of a single-user untrackable GUI point-and-click development
 environment, Kraken turns Access applications into [diffable](https://en.wiktionary.org/wiki/diffable) 
-plain text files.
+plain text files. These text files can go anywhere, but the only thing we discuss here is
+their use in source code version control.
 
 After the files are retrieved from the Git service using a command such as ```git pull```, kraken
 can then be used to load them into Microsoft Access, resulting in a complete GUI application in the
-normal Access way. Microsoft Access and Microsoft Windows are still needed to run the source code,
-but we can now see what needs to be done to remove this dependency.
+normal Access way. Microsoft Access and Microsoft Windows are still needed to run the source code.
 
 But for now, we have solved the important step of making Access development
 repeatable, using standard non-Microsoft software development tools.
@@ -123,7 +153,9 @@ application is created locally for the user.
 
 You will need to [install Python 3 for Windows](https://docs.python.org/3/using/windows.html#installation-steps).
 If you do this successfully, you should be able to type ```python``` at the Windows CMD command prompt. We have only 
-tested on Python version 3.12.0, but would expect higher versions to work. We know that versions 3.11.x do not work.
+tested on Python version 3.12.0, but would expect higher versions to work. Version 3.11.x and prior do *not* work.
+
+It is good practice to use the [Python venv facility](https://docs.python.org/3/library/venv.html). 
 
 At the Windows CMD prompt, use the ```pip``` command to install the kraken pre-requisites.
 
@@ -131,11 +163,11 @@ At the Windows CMD prompt, use the ```pip``` command to install the kraken pre-r
 python -m pip install -r requirements.txt
 ```
 
----
 
-## Using Kraken
 
-### Basic usage
+# Using Kraken
+
+## Basic usage
 
 ```shell
 python src/kraken.py [action] ... [database] [export]
@@ -173,17 +205,17 @@ Load back into access
 - load-queries
 - load-forms
 
-### Additional Tools
+## Additional Tools
 
 Kraken has multiple additional tools located inside `src/tools/`
 
-#### conv_utf16-ascii.py
+### conv_utf16-ascii.py
 
 Used to convert the UTF16 files which Access uses for forms and turns them into 8-bit ASCII. 
 
 Usage: `python conv_utf16-ascii.py <Path to file/directory of files>`
 
-#### strip_guids.py
+### strip_guids.py
 
 Strips the GUIDs from an exported form. We don't know why Access generates different
 GUIDs every time, but they prevent diffing forms and so we need to remove them. Access
@@ -191,15 +223,13 @@ does not seem to mind.
 
 Usage: `python strip_guids.py <Path to file/directory of files>`
 
-#### gen_docs.py
+### gen_docs.py
 
 Generates documentation the functions implemented by Access's COM object. It will write this to `doc.txt`.
 
 Usage: `python gen_docs.py`
 
----
-
-## Background
+# Relevant Computing History Background
 
 Here is a list of facts, rather than a coherent story. No doubt people familiar
 with the history of computing can improve the following, and we would love to
