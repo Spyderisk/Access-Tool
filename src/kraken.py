@@ -81,6 +81,8 @@ match args.action:
 
     case "dump-modules":
         dumpAllModules(access, settings)
+    case "dump-queries":
+        dumpAllQueries(access, settings)
     case "load-csvs":
         loadCSVs(args.csvs_directory, settings)
     case "load-queries":
